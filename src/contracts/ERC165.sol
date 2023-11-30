@@ -10,7 +10,7 @@ contract ERC165 is IERC165 {
         registerInterface(_calcFingerPrint());
     }
 
-    function _calcFingerPrint() private view returns (bytes4) {
+    function _calcFingerPrint() private pure returns (bytes4) {
         return bytes4(keccak256("supportsInterface(bytes4)"));
     }
 

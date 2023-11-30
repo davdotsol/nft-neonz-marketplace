@@ -11,6 +11,16 @@ contract ERC721 is ERC165, IERC721 {
 
     mapping(uint256 => address) private _tokenApprovals;
 
+    constructor() {
+        registerInterface(
+            bytes4(
+                keccak256("balanceOf(bytes4)") ^
+                    keccak256("ownerOf(bytes4)") ^
+                    keccak256("transferFrom(bytes4)")
+            )
+        );
+    }
+
     function _exists(uint256 tokenId) internal view returns (bool) {
         address _owner = _tokensOwner[tokenId];
         return _owner != address(0);

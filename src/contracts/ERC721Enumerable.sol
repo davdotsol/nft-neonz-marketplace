@@ -2,8 +2,9 @@
 pragma solidity ^0.8.0;
 
 import "./ERC721.sol";
+import "../interfaces/IERC721Enumerable.sol";
 
-contract ERC721Enumerable is ERC721 {
+contract ERC721Enumerable is ERC721, IERC721Enumerable {
     uint256[] private _allTokens;
 
     mapping(uint256 => uint256) private _allTokensIndex;
@@ -11,6 +12,16 @@ contract ERC721Enumerable is ERC721 {
     mapping(address => uint256[]) private _ownedTokens;
 
     mapping(uint256 => uint256) private _ownedTokensIndex;
+
+    constructor() {
+        registerInterface(
+            bytes4(
+                keccak256("totalSupply(bytes4)") ^
+                    keccak256("tokenByIndex(bytes4)") ^
+                    keccak256("tokenOfOwnerByIndex(bytes4)")
+            )
+        );
+    }
 
     function totalSupply() public view returns (uint256) {
         return _allTokens.length;
